@@ -32,13 +32,32 @@ export default function Inventory() {
     minimumStock: '',
     unitPrice: '',
     unitCost: '',
-    volumePerUnit: '1',
+    volumePerUnit: '20',
   })
   const [movementData, setMovementData] = useState({
     movementType: 'IN',
     quantity: '',
     reason: '',
   })
+
+  const getDefaultUnitOfMeasure = (type: string): string => {
+    switch (type) {
+      case 'HUMUS_LIQUID': return 'L'
+      case 'HUMUS_SOLID': return 'KG'
+      case 'WORM': return 'UN'
+      case 'SUPPLY': return 'UN'
+      default: return 'UN'
+    }
+  }
+
+  const handleTypeChange = (type: string) => {
+    const newUnit = getDefaultUnitOfMeasure(type)
+    setFormData({
+      ...formData,
+      type,
+      unitOfMeasure: newUnit,
+    })
+  }
 
   useEffect(() => {
     loadProducts()
@@ -67,7 +86,7 @@ export default function Inventory() {
         minimumStock: formData.minimumStock ? parseFloat(formData.minimumStock) : 0,
         unitPrice: formData.unitPrice ? parseFloat(formData.unitPrice) : 0,
         unitCost: formData.unitCost ? parseFloat(formData.unitCost) : 0,
-        volumePerUnit: formData.volumePerUnit ? parseFloat(formData.volumePerUnit) : 1,
+        volumePerUnit: formData.volumePerUnit ? parseFloat(formData.volumePerUnit) : 20,
       }
 
       if (editingProduct) {
@@ -115,7 +134,7 @@ export default function Inventory() {
       minimumStock: product.minimumStock.toString(),
       unitPrice: product.unitPrice.toString(),
       unitCost: product.unitCost.toString(),
-      volumePerUnit: product.volumePerUnit?.toString() || '1',
+      volumePerUnit: product.volumePerUnit?.toString() || '20',
     })
     setShowModal(true)
   }
@@ -141,7 +160,7 @@ export default function Inventory() {
       minimumStock: '',
       unitPrice: '',
       unitCost: '',
-      volumePerUnit: '1',
+      volumePerUnit: '20',
     })
   }
 
@@ -192,6 +211,7 @@ export default function Inventory() {
                   <th>Nombre</th>
                   <th>Tipo</th>
                   <th>Stock</th>
+                  <th>Contenido</th>
                   <th>Stock Mín.</th>
                   <th>Precio</th>
                   <th>Estado</th>
@@ -203,7 +223,8 @@ export default function Inventory() {
                   <tr key={product.id}>
                     <td>{product.name}</td>
                     <td>{getTypeLabel(product.type)}</td>
-                    <td>{product.currentStock} {product.unitOfMeasure}</td>
+                    <td>{product.currentStock}</td>
+                    <td>{product.volumePerUnit} {product.unitOfMeasure}</td>
                     <td>{product.minimumStock}</td>
                     <td>${product.unitPrice.toFixed(2)}</td>
                     <td>
@@ -260,7 +281,7 @@ export default function Inventory() {
                   <select
                     className="form-select"
                     value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    onChange={(e) => handleTypeChange(e.target.value)}
                   >
                     <option value="HUMUS_LIQUID">Humus Líquido</option>
                     <option value="HUMUS_SOLID">Humus Sólido</option>
@@ -270,31 +291,46 @@ export default function Inventory() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">Unidad de Medida</label>
-                  <select
-                    className="form-select"
-                    value={formData.unitOfMeasure}
-                    onChange={(e) => setFormData({ ...formData, unitOfMeasure: e.target.value })}
-                  >
-                    <option value="L">Litros (L)</option>
-                    <option value="KG">Kilogramos (KG)</option>
-                    <option value="UN">Unidades (UN)</option>
-                  </select>
+                  {formData.type === 'SUPPLY' ? (
+                    <select
+                      className="form-select"
+                      value={formData.unitOfMeasure}
+                      onChange={(e) => setFormData({ ...formData, unitOfMeasure: e.target.value })}
+                    >
+                      <option value="L">Litros (L)</option>
+                      <option value="KG">Kilogramos (KG)</option>
+                      <option value="UN">Unidades (UN)</option>
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={
+                        formData.unitOfMeasure === 'L' ? 'Litros' :
+                        formData.unitOfMeasure === 'KG' ? 'Kilogramos' : 'Unidades'
+                      }
+                      disabled
+                    />
+                  )}
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div className="form-group">
-                  <label className="form-label">Volumen/Unidad</label>
+                  <label className="form-label">Contenido por unidad</label>
                   <input
                     type="number"
                     step="0.01"
                     className="form-input"
                     value={formData.volumePerUnit}
                     onChange={(e) => setFormData({ ...formData, volumePerUnit: e.target.value })}
-                    placeholder="ej: 20"
+                    placeholder={formData.unitOfMeasure === 'L' ? 'ej: 20' : formData.unitOfMeasure === 'KG' ? 'ej: 25' : 'ej: 100'}
                   />
+                  <small style={{ color: 'var(--color-text-light)' }}>
+                    {formData.unitOfMeasure === 'L' ? 'Litros por unidad' : formData.unitOfMeasure === 'KG' ? 'Kg por unidad' : 'Unidades por bulto'}
+                  </small>
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Stock Actual</label>
+                  <label className="form-label">Stock (unidades)</label>
                   <input
                     type="number"
                     step="0.01"
