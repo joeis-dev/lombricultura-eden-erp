@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+backend/target/
+*.class
+*.jar
+*.war
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment (contains secrets)
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Docker
+docker-compose.override.yml
+
+# Backups
+backups/
+*.sql
+*.sql.gz
+
+# Test coverage
+coverage/
+*/coverage/
+
+# Misc
+*.tmp
+*.bak
