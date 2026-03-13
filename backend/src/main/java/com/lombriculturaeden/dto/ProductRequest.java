@@ -40,4 +40,8 @@ public class ProductRequest {
     
     @PositiveOrZero(message = "Unit cost must be zero or positive")
     private BigDecimal unitCost;
+    
+    @Positive(message = "Volume per unit must be greater than zero")
+    @Builder.Default
+    private BigDecimal volumePerUnit = BigDecimal.ONE;
 }

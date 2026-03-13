@@ -24,6 +24,7 @@ public class ProductResponse {
     private BigDecimal minimumStock;
     private BigDecimal unitPrice;
     private BigDecimal unitCost;
+    private BigDecimal volumePerUnit;
     private boolean lowStock;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -40,6 +41,7 @@ public class ProductResponse {
                 .minimumStock(entity.getMinimumStock())
                 .unitPrice(entity.getUnitPrice())
                 .unitCost(entity.getUnitCost())
+                .volumePerUnit(entity.getVolumePerUnit())
                 .lowStock(lowStock)
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())

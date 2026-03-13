@@ -19,6 +19,7 @@ public class ProductService {
     
     private static final BigDecimal DEFAULT_STOCK = BigDecimal.ZERO;
     private static final BigDecimal DEFAULT_PRICE = BigDecimal.ZERO;
+    private static final BigDecimal DEFAULT_VOLUME = BigDecimal.ONE;
     
     private final ProductRepository repository;
     
@@ -58,6 +59,7 @@ public class ProductService {
                 .minimumStock(request.getMinimumStock() != null ? request.getMinimumStock() : DEFAULT_STOCK)
                 .unitPrice(request.getUnitPrice() != null ? request.getUnitPrice() : DEFAULT_PRICE)
                 .unitCost(request.getUnitCost() != null ? request.getUnitCost() : DEFAULT_PRICE)
+                .volumePerUnit(request.getVolumePerUnit() != null ? request.getVolumePerUnit() : DEFAULT_VOLUME)
                 .build();
         
         return ProductResponse.fromEntity(repository.save(entity));
@@ -87,6 +89,9 @@ public class ProductService {
         }
         if (request.getUnitCost() != null) {
             entity.setUnitCost(request.getUnitCost());
+        }
+        if (request.getVolumePerUnit() != null) {
+            entity.setVolumePerUnit(request.getVolumePerUnit());
         }
         
         return ProductResponse.fromEntity(repository.save(entity));

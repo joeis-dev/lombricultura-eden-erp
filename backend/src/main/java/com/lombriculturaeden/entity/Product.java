@@ -43,6 +43,10 @@ public class Product extends BaseEntity {
     @Builder.Default
     private BigDecimal unitCost = BigDecimal.ZERO;
     
+    @Column(name = "volume_per_unit", precision = 12, scale = 2)
+    @Builder.Default
+    private BigDecimal volumePerUnit = BigDecimal.ONE;
+    
     public enum ProductType {
         HUMUS_LIQUID, HUMUS_SOLID, WORM, SUPPLY
     }

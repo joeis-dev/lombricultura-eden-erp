@@ -12,6 +12,7 @@ interface Product {
   minimumStock: number
   unitPrice: number
   unitCost: number
+  volumePerUnit: number
   lowStock: boolean
 }
 
@@ -31,6 +32,7 @@ export default function Inventory() {
     minimumStock: '',
     unitPrice: '',
     unitCost: '',
+    volumePerUnit: '1',
   })
   const [movementData, setMovementData] = useState({
     movementType: 'IN',
@@ -65,6 +67,7 @@ export default function Inventory() {
         minimumStock: formData.minimumStock ? parseFloat(formData.minimumStock) : 0,
         unitPrice: formData.unitPrice ? parseFloat(formData.unitPrice) : 0,
         unitCost: formData.unitCost ? parseFloat(formData.unitCost) : 0,
+        volumePerUnit: formData.volumePerUnit ? parseFloat(formData.volumePerUnit) : 1,
       }
 
       if (editingProduct) {
@@ -112,6 +115,7 @@ export default function Inventory() {
       minimumStock: product.minimumStock.toString(),
       unitPrice: product.unitPrice.toString(),
       unitCost: product.unitCost.toString(),
+      volumePerUnit: product.volumePerUnit?.toString() || '1',
     })
     setShowModal(true)
   }
@@ -137,6 +141,7 @@ export default function Inventory() {
       minimumStock: '',
       unitPrice: '',
       unitCost: '',
+      volumePerUnit: '1',
     })
   }
 
@@ -276,7 +281,18 @@ export default function Inventory() {
                   </select>
                 </div>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="form-group">
+                  <label className="form-label">Volumen/Unidad</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    className="form-input"
+                    value={formData.volumePerUnit}
+                    onChange={(e) => setFormData({ ...formData, volumePerUnit: e.target.value })}
+                    placeholder="ej: 20"
+                  />
+                </div>
                 <div className="form-group">
                   <label className="form-label">Stock Actual</label>
                   <input
