@@ -60,4 +60,22 @@ export const saleApi = {
   updateStatus: (id: string, status: string) => api.patch(`/sales/${id}/status?status=${status}`),
 }
 
+export const wormBedApi = {
+  getAll: () => api.get('/worm-beds'),
+  getById: (id: string) => api.get(`/worm-beds/${id}`),
+  create: (data: any) => api.post('/worm-beds', data),
+  update: (id: string, data: any) => api.put(`/worm-beds/${id}`, data),
+  delete: (id: string) => api.delete(`/worm-beds/${id}`),
+  updateSubtractionDate: (id: string, date: string) => api.patch(`/worm-beds/${id}/subtraction-date?date=${date}`),
+  updateApproximateCount: (id: string, count: number) => api.patch(`/worm-beds/${id}/approximate-count?count=${count}`),
+}
+
+export const wormBedModificationApi = {
+  getAll: () => api.get('/worm-bed-modifications'),
+  getById: (id: string) => api.get(`/worm-bed-modifications/${id}`),
+  getByWormBedId: (wormBedId: string) => api.get(`/worm-bed-modifications/worm-bed/${wormBedId}`),
+  create: (data: any) => api.post('/worm-bed-modifications', data),
+  delete: (id: string) => api.delete(`/worm-bed-modifications/${id}`),
+}
+
 export default api

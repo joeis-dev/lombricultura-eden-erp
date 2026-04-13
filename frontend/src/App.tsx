@@ -6,7 +6,9 @@ import {
   Package, 
   ShoppingCart, 
   Users,
-  Activity
+  Activity,
+  Grid3X3,
+  History
 } from 'lucide-react'
 import Dashboard from './pages/Dashboard'
 import HarvestBatches from './pages/HarvestBatches'
@@ -14,11 +16,15 @@ import HumusProductions from './pages/HumusProductions'
 import Inventory from './pages/Inventory'
 import Sales from './pages/Sales'
 import Customers from './pages/Customers'
+import WormBeds from './pages/WormBeds'
+import WormBedModifications from './pages/WormBedModifications'
 
 const navItems = [
   { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { path: '/harvest-batches', icon: Wheat, label: 'Cosechas' },
   { path: '/humus-productions', icon: Droplets, label: 'Producción Humus' },
+  { path: '/worm-beds', icon: Grid3X3, label: 'Lechos' },
+  { path: '/worm-bed-modifications', icon: History, label: 'Modificaciones' },
   { path: '/inventory', icon: Package, label: 'Inventario' },
   { path: '/sales', icon: ShoppingCart, label: 'Ventas' },
   { path: '/customers', icon: Users, label: 'Clientes' },
@@ -64,6 +70,8 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/harvest-batches" element={<HarvestBatches />} />
             <Route path="/humus-productions" element={<HumusProductions />} />
+            <Route path="/worm-beds" element={<WormBeds />} />
+            <Route path="/worm-bed-modifications" element={<WormBedModifications />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/customers" element={<Customers />} />
