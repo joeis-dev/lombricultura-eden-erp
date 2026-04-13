@@ -25,7 +25,6 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: false
-    default-property-inclusion: non_null
 
 springdoc:
   api-docs:
